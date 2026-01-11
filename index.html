@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+  <html lang="zh-CN">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Personal Linktree</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+      <style>
+          body { background: #0f172a; color: white; font-family: sans-serif; }
+          /* 核心逻辑：默认隐藏所有语言元素 */
+          .lang-zh, .lang-en { display: none; }
+          /* 当父级拥有对应的 class 时显示 */
+          .lang-mode-zh .lang-zh { display: inline-block; }
+          .lang-mode-en .lang-en { display: inline-block; }
+          
+          .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+      </style>
+  </head>
+  <body class="lang-mode-zh min-h-screen flex items-center justify-center">
+  
+      <div class="max-w-md w-full mx-4 glass p-8 rounded-[2.5rem] text-center relative">
+          <button onclick="toggleLang()" class="absolute top-6 right-6 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full text-xs transition">
+              <span class="lang-zh">English</span>
+              <span class="lang-en">中文</span>
+          </button>
+          <img src="https://nic.ee.cd/img/logo_s.png" class="w-20 h-20 rounded-2xl mx-auto mb-4 border-2 border-white/20">
+          
+          <h1 class="text-xl font-bold mb-6">
+              <span class="lang-zh">免费域名注册</span>
+              <span class="lang-en">Free domain name registration</span>
+          </h1>
+  
+          <div class="grid gap-3">
+          <a href="https://github.com/ee-cd" class="link-card flex items-center p-4 rounded-2xl border border-white/5">
+              <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mr-4">
+                  <i class="fab fa-github"></i>
+              </div>
+              <div class="flex-1 text-left">
+                  <div class="text-sm font-semibold">GitHub</div>
+                  <div class="text-xs opacity-50">
+                      <span class="lang-zh lang-active">查看我的开源代码</span>
+                      <span class="lang-en">View my open source projects</span>
+                  </div>
+              </div>
+          </a>
+          <a href="#" class="link-card flex items-center p-4 rounded-2xl border border-white/5">
+              <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mr-4">
+                  <i class="fas fa-pen-nib"></i>
+              </div>
+              <div class="flex-1 text-left">
+                  <div class="text-sm font-semibold">Blog</div>
+                  <div class="text-xs opacity-50">
+                      <span class="lang-zh lang-active">阅读我的最新文章</span>
+                      <span class="lang-en">Read my latest articles</span>
+                  </div>
+              </div>
+          </a>
+          <a href="mailto:ee.cd@e-mail.free" class="link-card flex items-center p-4 rounded-2xl border border-white/5">
+                    <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mr-4">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <div class="flex-1 text-left">
+                        <div class="text-sm font-semibold">Contact</div>
+                        <div class="text-xs opacity-50">
+                            <span class="lang-zh lang-active">发邮件联系我</span>
+                            <span class="lang-en">Send me an email</span>
+                        </div>
+                    </div>
+          </a>
+          </div>
+          <footer class="mt-8 pt-6 border-t border-white/5 text-[10px] uppercase tracking-widest text-white/30">
+              &copy; 2026 ee.cd ❤️ my.uy
+          </footer>
+      </div>
+  
+      <script>
+          // 1. 切换函数
+          function toggleLang() {
+              const body = document.body;
+              if (body.classList.contains('lang-mode-zh')) {
+                  body.classList.remove('lang-mode-zh');
+                  body.classList.add('lang-mode-en');
+                  localStorage.setItem('pref-lang', 'en');
+              } else {
+                  body.classList.remove('lang-mode-en');
+                  body.classList.add('lang-mode-zh');
+                  localStorage.setItem('pref-lang', 'zh');
+              }
+          }
+  
+          // 2. 初始化：检测浏览器语言或用户上次的选择
+          window.onload = () => {
+              const savedLang = localStorage.getItem('pref-lang');
+              const browserLang = navigator.language.startsWith('zh') ? 'zh' : 'en';
+              const finalLang = savedLang || browserLang;
+              
+              document.body.classList.remove('lang-mode-zh', 'lang-mode-en');
+              document.body.classList.add('lang-mode-' + finalLang);
+          };
+      </script>
+  </body>
+  </html>
